@@ -4,8 +4,8 @@ export interface Ticket {
   id: string
   title: string
   description: string
-  status: string
-  priority: string
+  status: 'open' | 'in-progress' | 'resolved' | 'escalated'
+  priority: 'low' | 'medium' | 'high' | 'critical'
   assignedTo: string | null
   createdAt: string
   updatedAt: string

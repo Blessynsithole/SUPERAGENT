@@ -1,5 +1,22 @@
-import './index.css'
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-export default function GlobalStyles() {
-  return null
+/* Custom animations and utilities */
+@layer utilities {
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
 }
+
+/* Headless UI overrides */
+@layer base {
+  [role="dialog"] > div:first-child {
+    @apply fixed inset-0 bg-black/50 backdrop-blur-sm transition-opacity;
+  }
+}
+

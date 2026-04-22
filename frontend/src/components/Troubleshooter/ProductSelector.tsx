@@ -1,4 +1,4 @@
-import { Wifi, Zap, Wifi2, Router } from 'lucide-react'
+import { Wifi, Zap, Router } from 'lucide-react'
 
 const products = [
   {
@@ -26,7 +26,7 @@ const products = [
     id: 'router',
     name: 'Router',
     badge: 'DEVICE',
-    icon: Wifi2,
+    icon: Wifi,
     description: 'Network router · Configure network',
   },
 ]

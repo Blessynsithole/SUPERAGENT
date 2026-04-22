@@ -10,7 +10,7 @@ import ProductSelector from '@components/Troubleshooter/ProductSelector'
 
 export default function Dashboard() {
   const dispatch = useDispatch<AppDispatch>()
-  const { tickets, loading, error } = useSelector((state: RootState) => state.ticket)
+  const { error } = useSelector((state: RootState) => state.ticket)
   const [stats, setStats] = useState({
     callsToday: 0,
     resolvedToday: 0,

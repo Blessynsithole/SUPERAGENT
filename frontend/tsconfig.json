@@ -19,6 +19,9 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
+
+    /* TypeScript deprecation */
+    "ignoreDeprecations": "5.0",
     
     /* Path mapping */
     "baseUrl": ".",
