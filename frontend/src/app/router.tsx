@@ -7,6 +7,7 @@ import Dashboard from '@pages/Dashboard'
 import Records from '@pages/Records'
 import TaskBoard from '@pages/TaskBoard'
 import Admin from '@pages/Admin'
+import Login from '@pages/Login'
 
 // Auth Guard
 import PrivateRoute from './auth-guard'
@@ -18,6 +19,10 @@ export function AppRouter() {
     <Router>
       <Routes>
         {/* Public Routes */}
+        <Route
+          path="/login"
+          element={!isAuthenticated ? <Login /> : <Navigate to="/dashboard" replace />}
+        />
         
         {/* Protected Routes */}
         <Route
@@ -38,7 +43,7 @@ export function AppRouter() {
         />
 
         {/* Default redirect */}
-        <Route path="/" element={<Navigate to="/dashboard" replace />} />
+        <Route path="/" element={<Navigate to={isAuthenticated ? "/dashboard" : "/login"} replace />} />
         <Route path="*" element={<Navigate to="/dashboard" replace />} />
       </Routes>
     </Router>
