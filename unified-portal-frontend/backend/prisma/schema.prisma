@@ -1,0 +1,101 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String
+  role      Role     @default(AGENT)
+  status    Status   @default(ACTIVE)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  createdTickets Ticket[] @relation("TicketCreator")
+  assignedTickets Ticket[] @relation("TicketAssignee")
+
+  @@map("users")
+}
+
+model Ticket {
+  id          String      @id @default(cuid())
+  title       String
+  description String
+  status      TicketStatus @default(OPEN)
+  priority    Priority    @default(MEDIUM)
+  assignedToId String?
+  createdById String
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  
+  // ServiceNow Integration
+  serviceNowId String? @unique
+  serviceNowSyncStatus String?
+  serviceNowLastSync DateTime?
+
+  // Relations
+  assignedTo User? @relation("TicketAssignee", fields: [assignedToId], references: [id])
+  createdBy  User  @relation("TicketCreator", fields: [createdById], references: [id])
+
+  @@map("tickets")
+}
+
+model DnsRecord {
+  id     String     @id @default(cuid())
+  domain String
+  type   DnsType
+  value  String
+  ttl    Int        @default(3600)
+  status DnsStatus  @default(ACTIVE)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("dns_records")
+}
+
+enum Role {
+  AGENT
+  SUPERVISOR
+  ADMIN
+}
+
+enum Status {
+  ACTIVE
+  INACTIVE
+}
+
+enum TicketStatus {
+  OPEN
+  IN_PROGRESS
+  RESOLVED
+  ESCALATED
+}
+
+enum Priority {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
+
+enum DnsType {
+  A
+  CNAME
+  MX
+  TXT
+}
+
+enum DnsStatus {
+  ACTIVE
+  INACTIVE
+}
